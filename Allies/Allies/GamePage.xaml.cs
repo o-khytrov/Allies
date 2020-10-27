@@ -1,7 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.ComponentModel;
-
+using System.Linq;
 using Xamarin.Forms;
 
 namespace Allies
@@ -14,8 +13,6 @@ namespace Allies
 
         public int Score { get; set; }
         public string Word { get; set; }
-        public List<int> UsedWords { get; set; }
-
 
         public Game _game { get; set; }
 
@@ -29,6 +26,11 @@ namespace Allies
         "Кот",
         "Рыбалка",
         "Лимонад",
+        "Корабль",
+        "Воробрей",
+        "Франция",
+        "Мастер",
+        "Работа",
         "Колбаса"
         };
 
@@ -36,9 +38,9 @@ namespace Allies
         {
             _game = game;
             InitializeComponent();
+            _time = _game.RoundDuration;
             time.Text = _time.ToString();
             btn_correct.ImageSource = ImageSource.FromResource(@"Allies.Images.correct.png");
-            _time = _game.RoundDuration;
             _game.NextRound();
             lblTeam.Text = _game.GetCurrentTeam().Name;
             lblPlayer.Text = _game.GetCurrentPlayer().Name;
@@ -77,6 +79,12 @@ namespace Allies
         private void UpdateScore()
         {
             score.Text = Score.ToString();
+            if (_game.GameScores.Any(x => x.Value > _game.MaxScore))
+            {
+                isPlaying = false;
+                var navPage = new NavigationPage(new GameOverPage(_game));
+                Application.Current.MainPage = navPage;
+            }
         }
 
         private void SetTimer()
@@ -93,6 +101,7 @@ namespace Allies
                 isPlaying = false;
                 var navPage = new NavigationPage(new RoundResultPage(_game));
                 Application.Current.MainPage = navPage;
+                return false;
             }
 
             return true;

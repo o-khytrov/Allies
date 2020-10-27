@@ -4,73 +4,90 @@
              xmlns:d="http://xamarin.com/schemas/2014/forms/design"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              mc:Ignorable="d"
+             BackgroundColor="#2A2A2A"   
+             NavigationPage.HasNavigationBar="False"
              x:Class="Allies.SetupTeamPage">
     <ContentPage.Content>
-        <StackLayout VerticalOptions="FillAndExpand">
-            <Entry  x:Name="teamName" Placeholder="Команда" FontSize="Large"></Entry>
-            <Entry Placeholder="Игрок1" x:Name="playerName" Completed="playerName_Completed"></Entry>
-            <CollectionView x:Name="PlayerList" BackgroundColor="Aqua">
-                <CollectionView.ItemTemplate>
-                    <DataTemplate>
-                        <Grid Padding="10">
-                            <Grid.RowDefinitions>
-                                <RowDefinition Height="Auto"></RowDefinition>
-                                <RowDefinition Height="Auto"></RowDefinition>
-                            </Grid.RowDefinitions>
-                            <Grid.ColumnDefinitions >
-                                <ColumnDefinition Width="Auto"></ColumnDefinition>
-                                <ColumnDefinition Width="Auto"></ColumnDefinition>
-                            </Grid.ColumnDefinitions>
-                            <Image Grid.RowSpan="2" Source="{Binding ImageUrl}" 
+        <StackLayout>
+            <Frame Margin="10" BackgroundColor="White">
+                <StackLayout>
+                    <Entry x:Name="teamName" Placeholder="Команда" FontSize="Large"></Entry>
+                    <CollectionView Margin="10,0,10,10" x:Name="PlayerList">
+                        <CollectionView.ItemTemplate>
+                            <DataTemplate>
+                                <Grid>
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition Height="Auto"></RowDefinition>
+                                        <RowDefinition Height="Auto"></RowDefinition>
+                                    </Grid.RowDefinitions>
+                                    <Grid.ColumnDefinitions >
+                                        <ColumnDefinition></ColumnDefinition>
+                                        <ColumnDefinition></ColumnDefinition>
+                                    </Grid.ColumnDefinitions>
+                                    <!--<Image Grid.RowSpan="2" Source="{Binding ImageUrl}" 
                                    HeightRequest="60"
                                    WidthRequest="60"
-                                   Aspect="AspectFill"></Image>
-                            <Label Grid.Column="1"
+                                   Aspect="AspectFill">
+                        </Image> -->
+                                    <Label Grid.Column="1"
                                  Text="{Binding Name}"
                                  FontAttributes="Bold" />
-                            <Label Grid.Row="1"
+                                    <Label Grid.Row="1"
                                  Grid.Column="1"
                                  Text="{Binding Score}"
                                  FontAttributes="Italic"
                                  VerticalOptions="End" />
-                        </Grid>
-                    </DataTemplate>
-                </CollectionView.ItemTemplate>
-            </CollectionView>
-            <CollectionView x:Name="existingPlayers">
-                <CollectionView.ItemTemplate>
-                    <DataTemplate>
-                        <Grid Padding="10">
-                            <Grid.GestureRecognizers>
+                                    <Button Grid.RowSpan="2" Grid.Column="2" Text="-" Clicked="removePlayerFromTeam" CommandParameter="{Binding}"></Button>
+                                </Grid>
+                            </DataTemplate>
+                        </CollectionView.ItemTemplate>
+                    </CollectionView>
+                </StackLayout>
+
+            </Frame>
+            <Frame  Margin="10,0,10,0" BackgroundColor="White">
+                <StackLayout>
+                    <Entry Placeholder="Новый игрок" x:Name="playerName" Completed="playerName_Completed"></Entry>
+                    <CollectionView x:Name="existingPlayers">
+                        <CollectionView.ItemTemplate>
+                            <DataTemplate>
+                                <Grid >
+                                    <!--<Grid.GestureRecognizers>
                                 <TapGestureRecognizer Tapped="existingPlayerTapped" CommandParameter="{Binding}"></TapGestureRecognizer>
-                            </Grid.GestureRecognizers>
-                            <Grid.RowDefinitions>
-                                <RowDefinition Height="Auto"></RowDefinition>
-                                <RowDefinition Height="Auto"></RowDefinition>
-                            </Grid.RowDefinitions>
-                            <Grid.ColumnDefinitions >
-                                <ColumnDefinition Width="Auto"></ColumnDefinition>
-                                <ColumnDefinition Width="Auto"></ColumnDefinition>
-                            </Grid.ColumnDefinitions>
-                            <Image Grid.RowSpan="2" Source="{Binding ImageUrl}" 
+                            </Grid.GestureRecognizers>-->
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition Height="Auto"></RowDefinition>
+                                        <RowDefinition Height="Auto"></RowDefinition>
+                                    </Grid.RowDefinitions>
+                                    <Grid.ColumnDefinitions >
+                                        <ColumnDefinition></ColumnDefinition>
+                                        <ColumnDefinition></ColumnDefinition>
+                                        <ColumnDefinition></ColumnDefinition>
+                                        <ColumnDefinition></ColumnDefinition>
+                                    </Grid.ColumnDefinitions>
+                                    <!--<Image Grid.RowSpan="2" Source="{Binding ImageUrl}" 
                                    HeightRequest="60"
                                    WidthRequest="60"
-                                   Aspect="AspectFill"></Image>
-                            <Label Grid.Column="1"
+                                   Aspect="AspectFill"></Image>-->
+                                    <Label Grid.Column="0"
                                  Text="{Binding Name}"
                                  FontAttributes="Bold" />
-                            <Label Grid.Row="1"
+                                    <Label Grid.Row="1"
                                  Grid.Column="1"
                                  Text="{Binding Score}"
                                  FontAttributes="Italic"
                                  VerticalOptions="End"  />
+                                    <Button Grid.RowSpan="2" Grid.Column="2" Text="Add" Clicked="existingPlayerTapped" CommandParameter="{Binding}" BackgroundColor="#83ED33"></Button>
+                                    <Button Grid.RowSpan="2" Grid.Column="3" Text="Delete" Clicked="removePlayer" CommandParameter="{Binding}" BackgroundColor="Red"></Button>
 
-                        </Grid>
+                                </Grid>
 
-                    </DataTemplate>
-                </CollectionView.ItemTemplate>
-            </CollectionView>
-            <Button Text="Ok" Clicked="SaveTeamClicked" ></Button>
+                            </DataTemplate>
+                        </CollectionView.ItemTemplate>
+                    </CollectionView>
+                </StackLayout>
+            </Frame>
+            <Button Margin="10" Padding="0" Text="Ok" Clicked="SaveTeamClicked"></Button>
         </StackLayout>
     </ContentPage.Content>
 </ContentPage>

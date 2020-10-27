@@ -4,7 +4,8 @@
              xmlns:d="http://xamarin.com/schemas/2014/forms/design"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              mc:Ignorable="d"
-             x:Class="Allies.GamePage">
+             x:Class="Allies.GamePage"
+             NavigationPage.HasNavigationBar="False">
 
     <StackLayout VerticalOptions="Fill">
         <Label x:Name="lblTeam" Padding="10" HorizontalOptions="Center" BackgroundColor="Red" TextColor="White"></Label>

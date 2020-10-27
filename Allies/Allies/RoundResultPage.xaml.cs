@@ -1,8 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
@@ -12,7 +9,8 @@ namespace Allies
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class RoundResultPage : ContentPage
     {
-        Game _game;
+        private Game _game;
+
         public RoundResultPage(Game game)
         {
             InitializeComponent();
@@ -21,16 +19,18 @@ namespace Allies
             var team = round.Team;
             lblTeam.Text = round.Team.Name;
             lblPlayer.Text = round.Player.Name;
-            results.ItemsSource = round.Quests;
-            var to = game.Rounds.GroupBy(x => x.Team.Name).ToDictionary(x => x.Key, x => x.SelectMany(z => z.Quests).Where(z => z.Result).Count());
-            totals.ItemsSource = to;
+            var nextTeam = game.Teams.Peek();
+            var nextPlayer = nextTeam.Players.Peek();
+            lblNextPlayer.Text = $"Следующий ход: команда {nextTeam.Name} {nextPlayer.Name}";
+            //results.ItemsSource = round.Quests;
+            var total = game.GameScores;
+            totals.ItemsSource = total;
         }
 
         private void btnContinue_Clicked(object sender, EventArgs e)
         {
             var navPage = new GamePage(_game);
             Application.Current.MainPage = navPage;
-
         }
     }
 }

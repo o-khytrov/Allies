@@ -4,20 +4,26 @@
              xmlns:d="http://xamarin.com/schemas/2014/forms/design"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              mc:Ignorable="d"
-             x:Class="Allies.SetupGamePage">
+             x:Class="Allies.SetupGamePage" NavigationPage.HasNavigationBar="False">
     <ContentPage.Content>
         <StackLayout>
             <Label x:Name="roundDuration"></Label>
-            <ListView x:Name="Teams">
-                <ListView.ItemTemplate>
-                    <DataTemplate>
-                        <TextCell Text="{Binding Name}" Detail="{Binding PlayerList}"></TextCell>
-                    </DataTemplate>
-                </ListView.ItemTemplate>
-            </ListView>
-            <Button Text="Добавить команду" Clicked="addTeamClicked"></Button>
-            <Button Text="Настройки" Clicked="gameSettingsClicked"></Button>
-            <Button x:Name="btnStartGame" Text="Начать игру" Clicked="startGameClicked"></Button>
+            <Frame>
+                <ListView x:Name="Teams">
+                    <ListView.ItemTemplate>
+                        <DataTemplate>
+                            <TextCell Text="{Binding Name}" Detail="{Binding PlayerList}"></TextCell>
+                        </DataTemplate>
+                    </ListView.ItemTemplate>
+                </ListView>
+            </Frame>
+            <Frame>
+                <StackLayout>
+                    <Button Text="Добавить команду" Clicked="addTeamClicked"></Button>
+                    <Button Text="Настройки" Clicked="gameSettingsClicked"></Button>
+                    <Button x:Name="btnStartGame" Text="Начать игру" Clicked="startGameClicked"></Button>
+                </StackLayout>
+            </Frame>
         </StackLayout>
     </ContentPage.Content>
 </ContentPage>

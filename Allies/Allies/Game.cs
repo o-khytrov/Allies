@@ -17,7 +17,7 @@ namespace Allies
         {
             Teams = new Queue<Team>();
             Rounds = new List<Round>();
-            RoundDuration = 60;
+            RoundDuration = 0;
         }
 
         private void GetNextTeam()
@@ -52,6 +52,14 @@ namespace Allies
         public Player GetCurrentPlayer()
         {
             return currentPlayer;
+        }
+
+        public Dictionary<string, int> GameScores
+        {
+            get
+            {
+                return Rounds.GroupBy(x => x.Team.Name).ToDictionary(x => x.Key, x => x.SelectMany(z => z.Quests).Where(z => z.Result).Count());
+            }
         }
     }
 }

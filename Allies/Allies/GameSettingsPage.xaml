@@ -4,11 +4,15 @@
              xmlns:d="http://xamarin.com/schemas/2014/forms/design"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              mc:Ignorable="d"
-             x:Class="Allies.GameSettingsPage">
+             x:Class="Allies.GameSettingsPage"
+             NavigationPage.HasNavigationBar="False">
     <ContentPage.Content>
         <StackLayout BackgroundColor="#302d30">
-            <Label FontSize="Large" TextColor="#f1f1f1" x:Name="lbl" Text="{Binding Source={x:Reference slider},Path=Value, StringFormat='Время раунда {0}'}"></Label>
-            <Slider x:Name="slider" BindingContext="" Maximum="180" Minimum="5"  ValueChanged="slider_ValueChanged" ></Slider>
+            <Label FontSize="Large" TextColor="#f1f1f1" x:Name="lblRoundTime" Text="{Binding Source={x:Reference timeRoundSlider},Path=Value, StringFormat='Время раунда {0}'}"></Label>
+            <Slider x:Name="timeRoundSlider" BindingContext="" Maximum="180" Minimum="5"  ValueChanged="timeRoundSlider_ValueChanged" ></Slider>
+            
+            <Label FontSize="Large" TextColor="#f1f1f1" x:Name="lblGameScore" Text="{Binding Source={x:Reference gameScoreSlider},Path=Value, StringFormat='Игра до {0} очков'}"></Label>
+            <Slider x:Name="gameScoreSlider" BindingContext="" Maximum="180" Minimum="5"  ValueChanged="gameScoreSlider_ValueChanged" ></Slider>
             <Button VerticalOptions="EndAndExpand" Clicked="saveSettingsClicked" Text="Ok" ></Button>
         </StackLayout>
     </ContentPage.Content>

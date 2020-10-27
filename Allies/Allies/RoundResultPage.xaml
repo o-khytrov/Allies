@@ -7,15 +7,14 @@
              x:Class="Allies.RoundResultPage">
     <ContentPage.Content>
         <StackLayout>
-
             <Label HorizontalOptions="Center" Text="Команда" FontSize="Small"></Label>
             <Label HorizontalOptions="Center"  x:Name="lblTeam"></Label>
             <Label HorizontalOptions="Center" Text="Игрок"  FontSize="Small"></Label>
             <Label HorizontalOptions="Center" x:Name="lblPlayer"></Label>
-            <CollectionView x:Name="results">
+            <!--<CollectionView x:Name="results">
                 <CollectionView.ItemTemplate>
                     <DataTemplate>
-                        <!--<TextCell Text="{Binding Word}" Detail="{Binding Result}"></TextCell>-->
+                        --><!--<TextCell Text="{Binding Word}" Detail="{Binding Result}"></TextCell>--><!--
                         <Grid Padding="10" >
                             <Grid.RowDefinitions>
                                 <RowDefinition Height="Auto"></RowDefinition>
@@ -24,13 +23,13 @@
                                 <ColumnDefinition Width="80%"></ColumnDefinition>
                                 <ColumnDefinition Width="20%" ></ColumnDefinition>
                             </Grid.ColumnDefinitions>
-                            <Label Grid.Row="1" Grid.Column="1" Text="{Binding Word}"></Label>
+                            --><!--<Label Grid.Row="1" Grid.Column="1" Text="{Binding Word}"></Label>--><!--
+                            <Label Grid.Row="1" Grid.Column="1" Text="Word"></Label>
                             <Label Grid.Row="1" Grid.Column="2" Text="{Binding ResultDisplay}"></Label>
                         </Grid>
                     </DataTemplate>
                 </CollectionView.ItemTemplate>
-            </CollectionView>
-
+            </CollectionView>-->
             <ListView x:Name="totals">
                 <ListView.ItemTemplate>
                     <DataTemplate>
@@ -38,6 +37,7 @@
                     </DataTemplate>
                 </ListView.ItemTemplate>
             </ListView>
+            <Label x:Name="lblNextPlayer" FontSize="Large"></Label>
             <Button  x:Name="btnContinue" Text="Продолжить" Clicked="btnContinue_Clicked"></Button>
         </StackLayout>
     </ContentPage.Content>

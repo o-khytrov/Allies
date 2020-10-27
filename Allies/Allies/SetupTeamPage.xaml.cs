@@ -18,6 +18,7 @@ namespace Allies
         private ObservableCollection<Player> Players;
         private ObservableCollection<Player> ExistingPlayers;
         private SQLiteAsyncConnection _connection;
+
         public SetupTeamPage(Game game)
         {
             _connection = DependencyService.Get<ISQLiteDb>().GetConnection();
@@ -29,7 +30,6 @@ namespace Allies
 
         protected override async void OnAppearing()
         {
-            await _connection.CreateTableAsync<Player>();
             var players = await _connection.Table<Player>().ToListAsync();
             var playersInGame = _game.Teams.SelectMany(x => x.Players).ToList();
             var freePlayers = players.Where(x => !playersInGame.Any(p => p.Id == x.Id)).ToList();
@@ -73,21 +73,34 @@ namespace Allies
             var player = button.BindingContext as Player;
             Players.Remove(player);
             ExistingPlayers.Add(player);
-
         }
 
         private async void removePlayer(object sender, EventArgs e)
         {
-            // await _connection.DeleteAllAsync();
+            var button = sender as Button;
+            var player = button.BindingContext as Player;
+            ExistingPlayers.Remove(player);
+            await _connection.DeleteAsync(player);
         }
 
         private void existingPlayerTapped(object sender, EventArgs e)
         {
-            var player = ((TappedEventArgs)e).Parameter as Player;
-            ExistingPlayers.Remove(player);
-            Players.Add(player);
+            var button = sender as Button;
+            var player = button.BindingContext as Player;
+            if (!Players.Any(x => x.Id == player.Id))
+            {
+                ExistingPlayers.Remove(player);
+                Players.Add(player);
+            }
         }
 
+        private void removePlayerFromTeam(object sender, EventArgs e)
+        {
+            var button = sender as Button;
+            var player = button.BindingContext as Player;
+            Players.Remove(player);
+            ExistingPlayers.Add(player);
+        }
 
         private async void SwipeItem_Invoked(object sender, EventArgs e)
         {
