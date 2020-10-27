@@ -8,21 +8,68 @@
     <ContentPage.Content>
         <StackLayout VerticalOptions="FillAndExpand">
             <Entry  x:Name="teamName" Placeholder="Команда" FontSize="Large"></Entry>
-            <ListView x:Name="PlayersList" HasUnevenRows="True" BackgroundColor="Red">
-                <ListView.ItemTemplate>
-                    <DataTemplate>
-                        <ViewCell>
-                            <StackLayout Margin="1" Orientation="Horizontal" HorizontalOptions="Fill">
-                                <Label Text="{Binding Name}" HorizontalOptions="StartAndExpand" VerticalOptions="Center" />
-                                <Button BackgroundColor="Red" Text="Remove" Clicked="RemovePlayer" HorizontalOptions="EndAndExpand"></Button>
-                            </StackLayout>
-
-                        </ViewCell>
-                    </DataTemplate>
-                </ListView.ItemTemplate>
-            </ListView>
             <Entry Placeholder="Игрок1" x:Name="playerName" Completed="playerName_Completed"></Entry>
-            
+            <CollectionView x:Name="PlayerList" BackgroundColor="Aqua">
+                <CollectionView.ItemTemplate>
+                    <DataTemplate>
+                        <Grid Padding="10">
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="Auto"></RowDefinition>
+                                <RowDefinition Height="Auto"></RowDefinition>
+                            </Grid.RowDefinitions>
+                            <Grid.ColumnDefinitions >
+                                <ColumnDefinition Width="Auto"></ColumnDefinition>
+                                <ColumnDefinition Width="Auto"></ColumnDefinition>
+                            </Grid.ColumnDefinitions>
+                            <Image Grid.RowSpan="2" Source="{Binding ImageUrl}" 
+                                   HeightRequest="60"
+                                   WidthRequest="60"
+                                   Aspect="AspectFill"></Image>
+                            <Label Grid.Column="1"
+                                 Text="{Binding Name}"
+                                 FontAttributes="Bold" />
+                            <Label Grid.Row="1"
+                                 Grid.Column="1"
+                                 Text="{Binding Score}"
+                                 FontAttributes="Italic"
+                                 VerticalOptions="End" />
+                        </Grid>
+                    </DataTemplate>
+                </CollectionView.ItemTemplate>
+            </CollectionView>
+            <CollectionView x:Name="existingPlayers">
+                <CollectionView.ItemTemplate>
+                    <DataTemplate>
+                        <Grid Padding="10">
+                            <Grid.GestureRecognizers>
+                                <TapGestureRecognizer Tapped="existingPlayerTapped" CommandParameter="{Binding}"></TapGestureRecognizer>
+                            </Grid.GestureRecognizers>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="Auto"></RowDefinition>
+                                <RowDefinition Height="Auto"></RowDefinition>
+                            </Grid.RowDefinitions>
+                            <Grid.ColumnDefinitions >
+                                <ColumnDefinition Width="Auto"></ColumnDefinition>
+                                <ColumnDefinition Width="Auto"></ColumnDefinition>
+                            </Grid.ColumnDefinitions>
+                            <Image Grid.RowSpan="2" Source="{Binding ImageUrl}" 
+                                   HeightRequest="60"
+                                   WidthRequest="60"
+                                   Aspect="AspectFill"></Image>
+                            <Label Grid.Column="1"
+                                 Text="{Binding Name}"
+                                 FontAttributes="Bold" />
+                            <Label Grid.Row="1"
+                                 Grid.Column="1"
+                                 Text="{Binding Score}"
+                                 FontAttributes="Italic"
+                                 VerticalOptions="End"  />
+
+                        </Grid>
+
+                    </DataTemplate>
+                </CollectionView.ItemTemplate>
+            </CollectionView>
             <Button Text="Ok" Clicked="SaveTeamClicked" ></Button>
         </StackLayout>
     </ContentPage.Content>

@@ -17,7 +17,7 @@ namespace Allies
         {
             Teams = new Queue<Team>();
             Rounds = new List<Round>();
-            RoundDuration = 15;
+            RoundDuration = 60;
         }
 
         private void GetNextTeam()

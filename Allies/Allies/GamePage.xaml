@@ -4,17 +4,17 @@
              xmlns:d="http://xamarin.com/schemas/2014/forms/design"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              mc:Ignorable="d"
-             x:Class="Allies.GamePage" BackgroundColor="Accent">
+             x:Class="Allies.GamePage">
 
-    <StackLayout BackgroundColor="#E8D6C6" VerticalOptions="Fill">
+    <StackLayout VerticalOptions="Fill">
         <Label x:Name="lblTeam" Padding="10" HorizontalOptions="Center" BackgroundColor="Red" TextColor="White"></Label>
         <Label x:Name="lblPlayer"  Padding="10" HorizontalOptions="Center" BackgroundColor="Red" TextColor="White"></Label>
         <Label FontSize="Large" x:Name="score" Margin="10" Text="score"></Label>
         <Label HorizontalOptions="Center" FontSize="Large" x:Name="time" Text="time"></Label>
         <Label   HorizontalOptions="Center" VerticalOptions="CenterAndExpand" x:Name="label" FontSize="Large"></Label>
         <StackLayout Orientation="Horizontal" VerticalOptions="FillAndExpand" HorizontalOptions ="Fill">
-            <Button Margin="40" WidthRequest="80" HeightRequest="80" BorderRadius="40" BackgroundColor="Red" TextColor="White" HorizontalOptions="StartAndExpand" VerticalOptions="End" Text="X" Clicked="btnWrongClicked"/>
-            <Button x:Name="btn_correct" Margin="40" WidthRequest="80" HeightRequest="80" BorderRadius="40" BackgroundColor="Green" TextColor="White" HorizontalOptions="EndAndExpand" VerticalOptions="End" Clicked="btnCorrectClicked" BorderWidth="5" InputTransparent="False"></Button>
+            <Button Margin="40" WidthRequest="80" HeightRequest="80" BorderRadius="40" BorderColor="Red" TextColor="White" HorizontalOptions="StartAndExpand" VerticalOptions="End"  BorderWidth="3" Clicked="btnWrongClicked"/>
+            <Button x:Name="btn_correct" Margin="40" WidthRequest="80" HeightRequest="80" BorderRadius="40" BorderColor="Green" TextColor="White" HorizontalOptions="EndAndExpand" VerticalOptions="End" Clicked="btnCorrectClicked" BorderWidth="3" InputTransparent="False"></Button>
         </StackLayout>
     </StackLayout>
 

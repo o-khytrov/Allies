@@ -1,4 +1,6 @@
-﻿using System;
+﻿using Allies.Persistance;
+using SQLite;
+using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
@@ -11,19 +13,30 @@ namespace Allies
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class SetupTeamPage : ContentPage
     {
-        private Game Game;
+        private Game _game;
         private Team Team;
         private ObservableCollection<Player> Players;
-
+        private ObservableCollection<Player> ExistingPlayers;
+        private SQLiteAsyncConnection _connection;
         public SetupTeamPage(Game game)
         {
+            _connection = DependencyService.Get<ISQLiteDb>().GetConnection();
             Players = new ObservableCollection<Player>();
             InitializeComponent();
-            PlayersList.HeightRequest = 10;
-            PlayersList.BackgroundColor = new Color(241, 248, 248);
-            PlayersList.ItemsSource = Players;
-            Game = game;
+            _game = game;
             Team = new Team();
+        }
+
+        protected override async void OnAppearing()
+        {
+            await _connection.CreateTableAsync<Player>();
+            var players = await _connection.Table<Player>().ToListAsync();
+            var playersInGame = _game.Teams.SelectMany(x => x.Players).ToList();
+            var freePlayers = players.Where(x => !playersInGame.Any(p => p.Id == x.Id)).ToList();
+            ExistingPlayers = new ObservableCollection<Player>(freePlayers);
+            existingPlayers.ItemsSource = ExistingPlayers;
+            PlayerList.ItemsSource = Players;
+            base.OnAppearing();
         }
 
         private void SaveTeamClicked(object sender, EventArgs e)
@@ -35,8 +48,8 @@ namespace Allies
             }
             Team.Name = teamName.Text;
             Team.Players = new Queue<Player>(Players.ToList());
-            Game.Teams.Enqueue(Team);
-            var navPage = new SetupGamePage(Game);
+            _game.Teams.Enqueue(Team);
+            var navPage = new SetupGamePage(_game);
             Application.Current.MainPage = navPage;
         }
 
@@ -45,12 +58,13 @@ namespace Allies
             playerName.IsVisible = true;
         }
 
-        private void playerName_Completed(object sender, EventArgs e)
+        private async void playerName_Completed(object sender, EventArgs e)
         {
             var newPlayer = new Player() { Name = playerName.Text.ToUpper() };
             playerName.Text = string.Empty;
             Players.Add(newPlayer);
-            PlayersList.HeightRequest = Players.Count() * 10;
+
+            await _connection.InsertAsync(newPlayer);
         }
 
         private void RemovePlayer(object sender, EventArgs e)
@@ -58,7 +72,28 @@ namespace Allies
             var button = sender as Button;
             var player = button.BindingContext as Player;
             Players.Remove(player);
-            PlayersList.HeightRequest = Players.Count() * 10;
+            ExistingPlayers.Add(player);
+
+        }
+
+        private async void removePlayer(object sender, EventArgs e)
+        {
+            // await _connection.DeleteAllAsync();
+        }
+
+        private void existingPlayerTapped(object sender, EventArgs e)
+        {
+            var player = ((TappedEventArgs)e).Parameter as Player;
+            ExistingPlayers.Remove(player);
+            Players.Add(player);
+        }
+
+
+        private async void SwipeItem_Invoked(object sender, EventArgs e)
+        {
+            var player = existingPlayers.SelectedItem as Player;
+            ExistingPlayers.Remove(player);
+            await _connection.DeleteAsync(player);
         }
     }
 }

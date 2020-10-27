@@ -8,5 +8,7 @@ namespace Allies
     {
         public string Word { get; set; }
         public bool Result { get; set; }
+
+        public string ResultDisplay { get { return Result? "✔️" : "❌"; } }
     }
 }
